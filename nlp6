@@ -1,0 +1,22 @@
+from nltk.corpus import wordnet as wn
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from nltk import FreqDist
+import string
+import re
+
+text = ""
+with open('english.txt', encoding="utf-8") as a:
+    text = a.read()
+    
+    def synonyms_anotonyms(word):
+    syn, ant = [], {}
+
+    for synonym in wn.synsets(word):
+        for l in synonym.lemmas():
+            syn.append(l.name())
+
+            if l.antonyms():
+                ant[l.name()] = l.antonyms()[0].name()
+    
+    print(f"For { word }:\nSynonyms: { set(syn) if len(syn) != 0 else None }\nAntonyms: { ant if len(ant) != 0 else None }\n")
